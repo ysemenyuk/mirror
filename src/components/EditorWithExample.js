@@ -7,9 +7,9 @@ import { schema } from 'prosemirror-schema-basic';
 import { addListNodes } from 'prosemirror-schema-list';
 import { exampleSetup } from 'prosemirror-example-setup';
 
-const mySchema = new Schema({
-  nodes: addListNodes(schema.spec.nodes, 'paragraph block*', 'block'),
-  marks: schema.spec.marks,
+let state = EditorState.create({
+  schema,
+  plugins: exampleSetup({ schema }),
 });
 
 const EditorWithExample = () => {
@@ -17,19 +17,14 @@ const EditorWithExample = () => {
 
   useEffect(() => {
     const editor = new EditorView(ref.current, {
-      state: EditorState.create({
-        schema: mySchema,
-        // doc: DOMParser.fromSchema(mySchema).parse(
-        //   document.querySelector('#content')
-        // ),
-        plugins: exampleSetup({ schema: mySchema }),
-      }),
+      state,
+      dispatchTransaction(transaction) {
+        // console.log('Document size went from', transaction.before.content.size, 'to', transaction.doc.content.size);
+        let newState = editor.state.apply(transaction);
+        console.log(1, transaction);
+        editor.updateState(newState);
+      },
     });
-
-    if (ref && ref.current) {
-      // ref.current.innerHTML = '';
-      // ref.current.appendChild(editor.dom);
-    }
   }, [ref]);
 
   return <div className={'editor'} ref={ref}></div>;

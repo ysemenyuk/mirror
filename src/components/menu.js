@@ -9,22 +9,24 @@ class MenuView {
 
     this.dom = document.createElement('div');
     this.dom.className = 'menu';
-    items.forEach(({ dom }) => this.dom.appendChild(dom));
+    this.items.forEach(({ dom }) => this.dom.appendChild(dom));
     this.update();
 
     this.dom.addEventListener('mousedown', (e) => {
       e.preventDefault();
-      editorView.focus();
-      items.forEach(({ command, dom }) => {
-        if (dom.contains(e.target)) command(editorView.state, editorView.dispatch, editorView);
+      this.editorView.focus();
+      this.items.forEach(({ command, dom }) => {
+        if (dom.contains(e.target)) command(this.editorView.state, this.editorView.dispatch);
       });
     });
   }
 
   update() {
+    console.log('update', this.editorView);
+
     this.items.forEach(({ command, dom }) => {
-      let active = command(this.editorView.state, null, this.editorView);
-      dom.style.display = active ? '' : 'none';
+      let active = command(this.editorView.state, null);
+      dom.style.color = active ? '' : '#919191';
     });
   }
 
@@ -52,21 +54,13 @@ function icon(text, name) {
   return span;
 }
 
-// Create an icon for a heading at the given level
-function heading(level) {
-  return {
-    command: setBlockType(schema.nodes.heading, { level }),
-    dom: icon('Heading' + level, 'heading'),
-  };
-}
-
 let menu = menuPlugin([
   { command: toggleMark(schema.marks.strong), dom: icon('Bold', 'strong') },
   { command: toggleMark(schema.marks.em), dom: icon('Italic', 'em') },
   { command: setBlockType(schema.nodes.paragraph), dom: icon('Paragraph', 'paragraph') },
-  heading(1),
-  heading(2),
-  heading(3),
+  { command: setBlockType(schema.nodes.heading, { level: 1 }), dom: icon('Heading 1', 'heading') },
+  { command: setBlockType(schema.nodes.heading, { level: 2 }), dom: icon('Heading 2', 'heading') },
+  { command: setBlockType(schema.nodes.heading, { level: 3 }), dom: icon('Heading ', 'heading') },
   { command: wrapIn(schema.nodes.blockquote), dom: icon('blockquote', 'blockquote') },
 ]);
 
