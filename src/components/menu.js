@@ -58,9 +58,9 @@ let menu = menuPlugin([
   { command: toggleMark(schema.marks.strong), dom: icon('Bold', 'strong') },
   { command: toggleMark(schema.marks.em), dom: icon('Italic', 'em') },
   { command: setBlockType(schema.nodes.paragraph), dom: icon('Paragraph', 'paragraph') },
-  { command: setBlockType(schema.nodes.heading, { level: 1 }), dom: icon('Heading 1', 'heading') },
-  { command: setBlockType(schema.nodes.heading, { level: 2 }), dom: icon('Heading 2', 'heading') },
-  { command: setBlockType(schema.nodes.heading, { level: 3 }), dom: icon('Heading ', 'heading') },
+  { command: setBlockType(schema.nodes.heading, { level: 1 }), dom: icon('Heading-1', 'heading') },
+  { command: setBlockType(schema.nodes.heading, { level: 2 }), dom: icon('Heading-2', 'heading') },
+  { command: setBlockType(schema.nodes.heading, { level: 3 }), dom: icon('Heading-3', 'heading') },
   { command: wrapIn(schema.nodes.blockquote), dom: icon('blockquote', 'blockquote') },
 ]);
 

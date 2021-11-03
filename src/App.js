@@ -1,12 +1,16 @@
 import './App.css';
-import Editor from './components/Editor';
+import EditorWithMenu from './components/EditorWithMenu';
+import EditorFromZero from './components/EditorFromZero';
 import EditorWithExample from './components/EditorWithExample';
+import EditorWithMD from './components/EditorWithMD';
 
 function App() {
   return (
     <div className={'App'}>
       <EditorWithExample />
-      <Editor />
+      <EditorWithMenu />
+      <EditorFromZero />
+      <EditorWithMD />
     </div>
   );
 }
