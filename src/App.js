@@ -17,6 +17,6 @@ function App() {
 
 // new branch
 // new branch
-// secon branch
+// second branch
 
 export default App;
